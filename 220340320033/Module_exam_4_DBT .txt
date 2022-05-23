@@ -1,0 +1,136 @@
+SECTION 1
+**********************************************************************
+1.Create table DEPT with the following structure:-
+
+Ans -->
+ create table DEPT(
+ DEPTNO int(2),
+ DNAME varchar(15),
+ LOC varchar(10)
+ );
+
+ insert into DEPT values
+ (10, 'ACCOUNTING', 'NEW YORK'),
+ (20, 'RESEARCH', 'DALLAS'),
+ (30, 'SALES', 'CHICAGO'),
+ (40, 'OPERATIONS', 'BOSTON');
+
+ SELECT * FROM DEPT; 
+
+
+***********************************************************************
+2. Create table EMP with the following structure:-
+Ans  --> 
+ CREATE TABLE EMP(
+ EMPNO INT(4) ,
+ ENAME VARCHAR(10),
+ JOB VARCHAR(9),
+ HIREDATE DATE,
+ SAL FLOAT(7,2),
+ COMM FLOAT(7,2),
+ DEPTNO INT(2)
+ );
+
+ insert into EMP VALUES
+ (7839, 'KING'  , 'MANAGER' , '1991-11-17' , 5000, NULL , 10),
+ (7698, 'BLAKE' , 'CLERK'   , '1981-05-01' , 2850, NULL , 30),
+ (7782, 'CLARK' , 'MANAGER' , '1981-06-09' , 2450, NULL , 10),
+ (7566, 'JONES' , 'CLERK'   , '1981-04-02' , 2975, NULL , 20),
+ (7654, 'MARTIN', 'SALESMAN', '1981-09-28' , 1250, 1400 , 30),
+ (7499, 'ALLEN' , 'SALESMAN', '1981-02-20' , 1600, 300  , 30);
+
+ SELECT * FROM EMP;
+ ***************************************************************************
+ 
+ 3. Display all the employees where SAL between 2500 and 5000 (inclusive of both).
+ 
+ Ans -->
+        SELECT * FROM EMP WHERE SAL BETWEEN 2500 AND 5000;
+		
+ ****************************************************************************
+ 
+ 4. Display all the ENAMEs in descending order of ENAME.
+  
+  Ans -->
+         SELECT * FROM EMP ORDER BY ENAME DESC;
+
+************************************************************************* 
+ 5. Display all the JOBs in lowercase. 
+ Ans -->
+        SELECT LOWER(JOB) FROM EMP
+ 
+ *******************************************************************************
+ 6. Display the ENAMEs and the lengths of the ENAMEs. 
+ 
+ Ans --> 
+        SELECT ENAME, LENGTH (ENAME) AS LENGTH_OF_ENAME FROM EMP;
+ ********************************************************************************
+ 7. Display the DEPTNO and the count of employees who belong to that DEPTNO. 
+ 
+ Ans -->
+        SELECT DEPTNO, COUNT(*) FROM EMP GROUP BY DEPTNO;
+		
+ **********************************************************************************
+ 8. Display the DNAMEs and the ENAMEs who belong to that DNAME. 
+ 
+ AnS -->
+         SELECT DNAME, ENAME FROM EMP, DEPT WHERE DEPT.DEPTNO = EMP.DEPTNO ;
+ 
+ ********************************************************************************
+ 9. Display the position at which the string ‘AR’ occurs in the ename. 
+ 
+ Ans -->
+        SELECT ENAME, POSITION('ER' IN ENAME) AS FIRST_Occ_ER FROM EMP;
+ 
+ **********************************************************************************
+ 10. Display the HRA for each employee given that HRA is 20% of SAL.
+ 
+  Ans -->
+         SELECT ENAME, SAL, SAL*0.2 AS HRA FROM EMP;
+ *********************************************************************************
+ ======================================================================================
+ ======================================================================================
+ SECTION 2
+ 
+ 1. Write a stored procedure by the name of PROC1 that accepts two varchar strings
+as parameters. Your procedure should then determine if the first varchar stringexists  
+inside the varchar string. For example, if string1 = ‘DAC’ and string2=‘CDAC, then string1
+ exists inside string2. The stored procedure should insert theappropriate message into a suitable 
+ TEMPP output table. Calling programfor thestored procedure need not be written.
+ 
+ ANS --> 
+        CREATE TABLE TEMPP(
+        P VARCHAR(20)
+        );
+
+        DELIMITER //
+        CREATE PROCEDURE PROC1(P VARCHAR(15))
+        BEGIN
+        INSERT INTO TEMPP VALUES(P);
+        END ; //
+        DELIMITER ;
+
+        CALL PROC1(CDAC)
+
+        SELECT * FROM TEMPP;
+		
+		
+*************************************************************************
+2. Create a stored function by the name of FUNC1 to take three parameters, thesides of a triangle. The function should return a Boolean value:- TRUEif thetriangle is valid, FALSE otherwise. A triangle is valid if the length of each sideis
+less than the sum of the lengths of the other two sides. Check if the dimensions
+entered can form a valid triangle. Calling program for the stored function neednot
+be written.
+
+ANS --> 
+      CREATE TABLE TRIANGLE(T BOOLEAN);
+
+     CREATE FUNCTION TRIANGLE(A INT, B INT, C INT)
+     BEGIN
+     IF NOT(A+B>= C AND B+C>= A AND C+A>=B) THEN RAISE INVALID TRIANGLE;
+     ELSE RETURN TRUE;
+     END; //
+      DELIMITER ;
+	  
+	  CALL(10,20,30);
+	  
+	  SELECT * FROM TRIANGLE;
